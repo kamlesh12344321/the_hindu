@@ -16,8 +16,9 @@ class BigText extends StatelessWidget {
         color: color,
         fontSize: size,
         wordSpacing: wordSpacing,
-        fontWeight: FontWeight.bold
+        fontWeight: FontWeight.bold,
       ),
+      maxLines: 4,
     );
   }
 }
