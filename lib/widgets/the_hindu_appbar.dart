@@ -32,8 +32,7 @@ class TheHinduAppBar extends StatelessWidget with PreferredSizeWidget {
           iconSize: 12,
           padding: EdgeInsets.only(right: 16),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ArticleDetail()));
+
           },
         )
       ],

@@ -18,15 +18,15 @@ class _FullImageViewItemState extends State<FullImageViewItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(16),
+      margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
       alignment: AlignmentDirectional.bottomStart,
       child: Padding(
         padding: EdgeInsets.all(10),
         child: BigText(20,Colors.white,1,widget.articleTitle!),
       ),
-      height: 250,
+      height: 300,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         image: DecorationImage(
           fit: BoxFit.fill,

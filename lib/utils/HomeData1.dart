@@ -28,7 +28,7 @@ class HomeData1 {
       bool? isSubscribeUser,
       List<dynamic>? topPicks,
       List<dynamic>? sportStars,
-      // Map<dynamic,dynamic>? allSports,
+    List<dynamic>? allSports,
   }){
     _viewType = viewType;
     _articalTitle = articalTitle;
@@ -43,7 +43,7 @@ class HomeData1 {
     _isSubscribeUser = isSubscribeUser;
     _topPicksList = topPicks;
     _sportStarsList = sportStars;
-    // _allSports = allSports;
+    _allSports = allSports;
 }
 
   HomeData1.fromJson(dynamic json) {
@@ -60,7 +60,7 @@ class HomeData1 {
     _isSubscribeUser = json['isSubscribeUser'];
     _topPicksList = json["topPicks"];
     _sportStarsList = json["sportStars"];
-    // _allSports = json["allSports"];
+    _allSports = json["allSports"];
   }
   String? _viewType;
   String? _articalTitle;
@@ -75,7 +75,7 @@ class HomeData1 {
   bool? _isSubscribeUser;
   List<dynamic>? _topPicksList;
   List<dynamic>? _sportStarsList;
-  // Map<dynamic,dynamic>? _allSports;
+  List<dynamic>? _allSports;
 HomeData1 copyWith({  String? viewType,
   String? articalTitle,
   bool? isLive,
@@ -89,7 +89,7 @@ HomeData1 copyWith({  String? viewType,
   bool? isSubscribeUser,
   List<dynamic>? topPicks,
   List<dynamic>? sportStarsList,
-  // Map<dynamic,dynamic>? allSports,
+  List<dynamic>? allSports,
 }) => HomeData1(  viewType: viewType ?? _viewType,
   articalTitle: articalTitle ?? _articalTitle,
   isLive: isLive ?? _isLive,
@@ -103,7 +103,7 @@ HomeData1 copyWith({  String? viewType,
   isSubscribeUser: isSubscribeUser ?? _isSubscribeUser,
   topPicks: topPicks ?? _topPicksList,
   sportStars: sportStarsList ?? _sportStarsList,
-  // allSports: allSports ?? _allSports,
+  allSports: allSports ?? _allSports,
 );
   String? get viewType => _viewType;
   String? get articalTitle => _articalTitle;
@@ -118,7 +118,7 @@ HomeData1 copyWith({  String? viewType,
   bool? get isSubscribeUser => _isSubscribeUser;
   List<dynamic>? get topPicks => _topPicksList;
   List<dynamic>? get sportStarsList => _sportStarsList;
-  // Map<dynamic,dynamic>? get allSports => _allSports;
+  List<dynamic>? get allSports => _allSports;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -135,7 +135,7 @@ HomeData1 copyWith({  String? viewType,
     map['isSubscribeUser'] = _isSubscribeUser;
     map['topPicks'] = _topPicksList;
     map['sportStars'] = _sportStarsList;
-    // map['allSports'] = _allSports;
+    map['allSports'] = _allSports;
     return map;
   }
 }

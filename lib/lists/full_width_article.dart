@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/big_text.dart';
+
 class FullWidthImageItem extends StatefulWidget {
-  const FullWidthImageItem({Key? key}) : super(key: key);
+  final String? articleTitle;
+  final String? articleImageUrl;
+  FullWidthImageItem({required this.articleTitle, required this.articleImageUrl});
 
   @override
   State<FullWidthImageItem> createState() => _FullWidthImageItemState();
@@ -10,15 +14,20 @@ class FullWidthImageItem extends StatefulWidget {
 class _FullWidthImageItemState extends State<FullWidthImageItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 300,
+    return  Container(
+      margin: EdgeInsets.only(top: 10,bottom: 10),
+      alignment: AlignmentDirectional.bottomStart,
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: BigText(20,Colors.white,1,widget.articleTitle!),
+      ),
+      height: 250,
       decoration: BoxDecoration(
-        color: Colors.white,
-        image: DecorationImage(
-          fit: BoxFit.contain,
-          image: new NetworkImage("https://www.thehindu.com/news/national/fsb6vw/article65331076.ece/alternates/FREE_1200/3500.jpeg")
-        )
+          color: Colors.white,
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage(widget.articleImageUrl!)
+          )
       ),
     );
   }

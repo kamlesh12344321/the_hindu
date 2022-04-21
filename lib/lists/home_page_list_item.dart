@@ -18,16 +18,15 @@ class _HomePageListItemState extends State<HomePageListItem> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 180,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      height: 140,
+      margin: EdgeInsets.only(top: 12,bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
             child: Container(
-              width: 150,
-              height: 150,
+              width: 140,
+              height: 140,
               margin: EdgeInsets.only(right: 5),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -39,21 +38,25 @@ class _HomePageListItemState extends State<HomePageListItem> {
           ),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BigText(18, Colors.black, 1, widget.articleTitle ?? ""),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        SmallText("National", 14, Colors.grey, 1.0),
-                        SmallText("Time", 14, Colors.grey, 1.0),
+                        SmallText("National  ", 14, Colors.grey, 1.0),
+                        SmallText("Time  ", 14, Colors.grey, 1.0),
                       ],
                     ),
                     Row(
                       children: [
-                        Icon(Icons.add_moderator),
-                        Icon(Icons.share),
+                        Icon(Icons.add_moderator,),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.share,),
                       ],
                     )
 

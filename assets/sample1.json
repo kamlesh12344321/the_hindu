@@ -91,6 +91,32 @@
     "isSubscribeUser": true
   },
   {
+    "viewType": "2",
+    "artical_title": "Sri Lankan President Gotabaya Rajapaksa appoints new Cabinet amid persisting crisis in country",
+    "is_live": false,
+    "country": "International",
+    "time": "APRIL 18, 2022 12:44",
+    "isFavrate": false,
+    "articleDes": "Sri Lankan President Gotabaya Rajapaksa on Monday appointed a new Cabinet, even as large seaside protests demanding his resignation continue for over 10 days.  A total of 17 members, including many former Cabinet Ministers, were sworn in, authorities said.\n\nThe “new Cabinet” does not include the two Rajapaksa brothers (Chamal and Basil Rajapaksa), and Namal Rajapaksa, their nephew, who earlier held key portfolios. They resigned with their Cabinet colleagues on April 3, amid surging public anger against the ruling administration. However, Mr. Gotabaya Rajapaksa and Prime Minister Mahinda Rajapaksa remain in power, despite massive demonstrations demanding they resign.",
+    "imageUrl": "https://www.thehindu.com/incoming/2jkteh/article65331399.ece/alternates/FREE_1200/Sri_Lanka_05100.jpg-6fb0a.jpg",
+    "addVisibility": false,
+    "crownIconVisibility": false,
+    "isSubscribeUser": false
+  },
+  {
+    "viewType": "2",
+    "artical_title": "Lakhimpur Kheri violence case | Supreme Court sets aside Allahabad HC order granting bail to Ashish Mishra",
+    "is_live": false,
+    "country": "India",
+    "time": "12 PM",
+    "isFavrate": false,
+    "articleDes": "The Supreme Court on Monday cancelled the bail granted by Allahabad High Court to Ashish Mishra, Lakhimpur Kheri case prime accused and a Union Minister's son, in a \"tearing hurry\" and without giving the victims of the crime an opportunity to be heard.\n\nA three-judge Bench of Chief Justice of India N.V. Ramana, Justices Surya Kant and Hima Kohli directed him to surrender within a week.\n\nThe order, read out in court by Justice Kant for the Bench, said the High Court exceeded its jurisdiction, denied victims a chance to participate in the bail proceedings and was in a \"tearing hurry\" to grant bail. He said the court, taking all these factors under consideration, could \"rightfully cancel the bail\".",
+    "imageUrl": "https://www.thehindu.com/incoming/3oh9z3/article65331260.ece/alternates/FREE_1200/IMG_Ashish_Mishra_at_Cri_2_1_G692L6JA.jpg",
+    "addVisibility": false,
+    "crownIconVisibility": false,
+    "isSubscribeUser": false
+  },
+  {
     "viewType": "5",
     "artical_title": "",
     "is_live": false,
@@ -198,17 +224,12 @@
         "imageUrl": "https://www.thehindu.com/news/national/oatwtc/article65328837.ece/alternates/LANDSCAPE_215/80cc1d28c1b53e6a3a106c3de81cfed2Y29udGVudHNlYXJjaGFwaSwxNjUwMjE1NzA1-2.66413073.jpeg",
         "title": "Club and country is possible if a window is created for the IPL",
         "des": ""
-      },
-      {
-        "imageUrl": "https://www.thehindu.com/news/national/oatwtc/article65328837.ece/alternates/LANDSCAPE_215/80cc1d28c1b53e6a3a106c3de81cfed2Y29udGVudHNlYXJjaGFwaSwxNjUwMjE1NzA1-2.66413073.jpeg",
-        "title": "Club and country is possible if a window is created for the IPL",
-        "des": ""
       }
     ]
   },
   {
     "viewType": "2",
-    "artical_title": "IPL 2022 | Overseas player of Delhi Capitals tests COVID positive; squad's travel to Pune delayed",
+    "artical_title": "Jahangirpuri communal clash | Letter petition to CJI seeks court-monitored probe",
     "is_live": false,
     "country": "India",
     "time": "12 PM",
@@ -220,7 +241,33 @@
     "isSubscribeUser": false
   },
   {
+    "viewType": "2",
+    "artical_title": "IPL 2022 | Overseas player of Delhi Capitals tests COVID positive; squad's travel to Pune delayed",
+    "is_live": false,
+    "country": "India",
+    "time": "12 PM",
+    "isFavrate": false,
+    "articleDes": "An overseas player in the Delhi Capitals team has tested positive for COVID-19, forcing the franchise to delay its travel to Pune for its next IPL match against Punjab Kings on Wednesday.\n\nIt is understood that an all-rounder showed some symptoms and a Rapid Antigen Test was performed which came positive.",
+    "imageUrl": "https://www.thehindu.com/incoming/utkwpv/article65316999.ece/alternates/FREE_1200/PTI04_12_2022_000215B.jpg",
+    "addVisibility": false,
+    "crownIconVisibility": false,
+    "isSubscribeUser": false
+  },
+  {
     "viewType": "7",
+    "artical_title": "Russia-Ukraine crisis live updates | U.S. set to send more military aid to Ukraine",
+    "is_live": false,
+    "country": "India",
+    "time": "12 PM",
+    "isFavrate": false,
+    "articleDes": "President Joe Biden is set to announce plans Thursday to send additional military aid to help Ukraine fight back against the Russian invasion, according to a U.S. official. The new package is expected to be similar in size to the $800 million package Biden announced last week. \n\nMeanwhile,  the Luhansk governor said Russian forces now control 80% of the region, which is one of two regions that make up the Donbas in eastern Ukraine.",
+    "imageUrl": "https://www.thehindu.com/incoming/l414er/article65340682.ece/alternates/FREE_1200/2022-04-19T182159Z_842757749_RC2DQT9TSDIE_RTRMADP_3_UKRAINE-CRISIS.JPG",
+    "addVisibility": false,
+    "crownIconVisibility": false,
+    "isSubscribeUser": false
+  },
+  {
+    "viewType": "8",
     "artical_title": "",
     "is_live": false,
     "country": "",

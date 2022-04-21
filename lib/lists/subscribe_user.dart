@@ -11,6 +11,7 @@ class _SubscribeUserTemplateState extends State<SubscribeUserTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 10,bottom: 10),
       width: 300,
       height: 250,
       decoration: BoxDecoration(
