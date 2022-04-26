@@ -11,13 +11,13 @@ class _SubscribeUserTemplateState extends State<SubscribeUserTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10,bottom: 10),
+      margin: const EdgeInsets.only(top: 10,bottom: 10),
       width: 300,
       height: 250,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.blueAccent,
       ),
-      child: Center(
+      child: const Center(
         child: Text(
           "Subscribe User",
           style: TextStyle(

@@ -17,6 +17,8 @@ import 'package:the_hindu/utils/HomeData1.dart';
 import 'package:the_hindu/utils/SportStars.dart';
 import 'package:the_hindu/utils/top_picks.dart';
 
+import '../utils/CustomColors.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -37,70 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder(
-        future: futureData,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("${snapshot.error}"),
-            );
-          } else if (snapshot.hasData) {
-            List<HomeData1>? data1 = snapshot.data as List<HomeData1>?;
-            return ListView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: data1?.length,
-                itemBuilder: (BuildContext context, int index) {
-                  String? title = data1?[index].articalTitle;
-                  String? image = data1?[index].imageUrl;
-                  String? viewType = data1?[index].viewType;
-                  String? des = data1?[index].articleDes;
-                  if (viewType == "1") {
-                    return ListTile(
-                      title: FullImageViewItem(
-                          articleTitle: title, articleImageUrl: image),
-                      onTap: () => _sendDataToSecondScreen(context, des),
-                    );
-                  } else if (viewType == "2") {
-                    return ListTile(
-                      title: HomePageListItem(
-                        articleTitle: title,
-                        articleImageUrl: image,
-                      ),
-                    );
-                  } else if (viewType == "3") {
-                    return BannerAds();
-                  } else if (viewType == "4") {
-                    return SubscribeUserTemplate();
-                  } else if (viewType == "5") {
-                    List? data = data1![index].topPicks;
-                    return TopPicksView(
-                      data: data?.map((e) => TopPicks.fromJson(e)).toList(),
-                    );
-                  } else if (viewType == "6") {
-                    List? data = data1![index].sportStarsList;
-                    return SportStarItem(
-                      data: data?.map((e) => SportStars.fromJson(e)).toList(),
-                    );
-                  } else if (viewType == "7") {
-                    return FullWidthImageItem(
-                      articleTitle: title,
-                      articleImageUrl: image,
-                    );
-                  } else if (viewType == "8") {
-                    List? data = data1?[index].allSports;
-                    // return AllSportsViewItem(mapData: data?.map((e) => AllSports.fromJson(e)).toList());
-                  }
-                  return Center(
-                    child: Text(""),
-                  );
-                });
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+      child: loadHomeData(),
     );
   }
 
@@ -109,6 +48,109 @@ class _HomePageState extends State<HomePage> {
         await rootBundle.rootBundle.loadString('assets/sample1.json');
     List? jsonResponse = json.decode(response);
     return jsonResponse!.map((e) => HomeData1.fromJson(e)).toList();
+  }
+
+  Widget loadHomeData() {
+    return FutureBuilder(
+      future: futureData,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text("${snapshot.error}"),
+          );
+        } else if (snapshot.hasData) {
+          List<HomeData1>? data1 = snapshot.data as List<HomeData1>?;
+          return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: data1?.length,
+              itemBuilder: (BuildContext context, int index) {
+                String? title = data1?[index].articalTitle;
+                String? image = data1?[index].imageUrl;
+                String? viewType = data1?[index].viewType;
+                String? des = data1?[index].articleDes;
+                if (viewType == "1") {
+                  return ListTile(
+                    title: FullImageViewItem(
+                        articleTitle: title, articleImageUrl: image),
+                    onTap: () => _sendDataToSecondScreen(context, des),
+                  );
+                } else if (viewType == "2") {
+                  return ListTile(
+                    title: HomePageListItem(
+                      articleTitle: title,
+                      articleImageUrl: image,
+                    ),
+                  );
+                } else if (viewType == "3") {
+                  return const BannerAds();
+                } else if (viewType == "4") {
+                  return const SubscribeUserTemplate();
+                } else if (viewType == "5") {
+                  List? data = data1![index].topPicks;
+                  return Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    color: CustomColors.topPicksSection,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 10,left: 10),
+                              child: Text(
+                                "Top Picks",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: "FiraSans",
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                             Container(
+                             margin: EdgeInsets.only(top: 10,right: 10),
+                               child: Text(
+                                 "View more",
+                                 style: TextStyle(
+                                     fontFamily: "FiraSans",
+                                     fontSize: 16,
+                                     color: Colors.lightBlue,
+                                 fontWeight: FontWeight.w400),
+                               ),
+                             )
+                          ],
+                        ),
+                        TopPicksView(
+                          data: data?.map((e) => TopPicks.fromJson(e)).toList(),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (viewType == "6") {
+                  List? data = data1![index].sportStarsList;
+                  return sportStarItem(
+                    data: data?.map((e) => SportStars.fromJson(e)).toList(),
+                  );
+                } else if (viewType == "7") {
+                  return FullWidthImageItem(
+                    articleTitle: title,
+                    articleImageUrl: image,
+                  );
+                } else if (viewType == "8") {
+                  List? data = data1?[index].allSports;
+                  return allSportsViewItem(
+                      mapData: data?.map((e) => Welcome.fromJson(e)));
+                }
+                return const Center(
+                  child: Text(""),
+                );
+              });
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
   }
 
   void _sendDataToSecondScreen(BuildContext context, String? des) {

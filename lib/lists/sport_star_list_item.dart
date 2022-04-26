@@ -4,16 +4,16 @@ import 'package:the_hindu/widgets/big_text.dart';
 import 'package:the_hindu/widgets/small_icon_article.dart';
 import 'package:the_hindu/widgets/small_text.dart';
 
-class HomePageListItem extends StatefulWidget {
+class SportPageListItem extends StatefulWidget {
   final String? articleTitle;
   final String? articleImageUrl;
-  const HomePageListItem({Key? key,required this. articleTitle, required this. articleImageUrl}) : super(key: key);
+  const SportPageListItem({Key? key,required this. articleTitle, required this. articleImageUrl}) : super(key: key);
 
   @override
-  State<HomePageListItem> createState() => _HomePageListItemState();
+  State<SportPageListItem> createState() => _SportPageListItemState();
 }
 
-class _HomePageListItemState extends State<HomePageListItem> {
+class _SportPageListItemState extends State<SportPageListItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class _HomePageListItemState extends State<HomePageListItem> {
         children: [
           Center(
             child: Container(
-              width: 149,
+              width: 139,
               height: 112,
               margin: const EdgeInsets.only(right: 10),
               decoration: BoxDecoration(
@@ -46,18 +46,13 @@ class _HomePageListItemState extends State<HomePageListItem> {
                   children: [
                     Row(
                       children: [
-                        SmallText("National  ", 12, Colors.black, 1.0),
-                        SmallText("Time  ", 12, Colors.black, 1.0),
+                        SmallText("SPORTSTAR .  ", 12, Colors.redAccent, 1.0),
+                        SmallText("IPL 2022  ", 12, Colors.black, 1.0),
                       ],
                     ),
                     Row(
                       children: [
-                        SmallIconArticle('assets/images/share.png',18.0,17.0,),
-                        const SizedBox(
-                          width: 18,
-                          height: 17,
-                        ),
-                        SmallIconArticle("assets/images/fav.png",18.0,17.0),
+                        SmallIconArticle("assets/images/share.png",18.0,17.0),
                       ],
                     )
 
@@ -71,3 +66,5 @@ class _HomePageListItemState extends State<HomePageListItem> {
     );
   }
 }
+
+

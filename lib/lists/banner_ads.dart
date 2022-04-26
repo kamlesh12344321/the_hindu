@@ -11,14 +11,14 @@ class _BannerAdsState extends State<BannerAds> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 40,top: 10,bottom: 10,right: 40),
+      margin: const EdgeInsets.only(left: 40,top: 10,bottom: 10,right: 40),
       width: 300,
       height: 250,
       decoration: BoxDecoration(
         color: Colors.blueAccent,
         borderRadius: BorderRadius.circular(5)
       ),
-      child: Center(
+      child: const Center(
         child: Text(
           "Ads",
           style: TextStyle(

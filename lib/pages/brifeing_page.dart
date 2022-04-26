@@ -10,11 +10,9 @@ class BriefingPage extends StatefulWidget {
 class _BriefingPageState extends State<BriefingPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Align(
-        alignment: Alignment.center,
-        child: Text("Briefing"),
-      ),
+    return const Align(
+      alignment: Alignment.center,
+      child: Text("Briefing"),
     );
   }
 }

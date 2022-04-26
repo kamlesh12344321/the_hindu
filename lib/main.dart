@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:the_hindu/widgets/bottom_navigation_bar.dart';
 
 void main() {
-  runApp(TheHinduApp());
+  runApp(const TheHinduApp());
 }
 
 class TheHinduApp extends StatefulWidget {
+  const TheHinduApp({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _TheHinduState();
@@ -18,6 +20,10 @@ class _TheHinduState extends State<TheHinduApp> {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: "FiraSans",
+      ),
       home: TheHinduBottomNav()
     );
   }

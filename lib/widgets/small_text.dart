@@ -7,7 +7,7 @@ class SmallText extends StatelessWidget {
   double? wordSpacing = 2.0;
 
   SmallText(
-      this.text, this.size, this.color, this.wordSpacing);
+      this.text, this.size, this.color, this.wordSpacing, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +17,7 @@ class SmallText extends StatelessWidget {
         color: color,
         fontSize: size,
         wordSpacing: wordSpacing,
+        fontFamily: "FiraSans"
       ),
     );
   }

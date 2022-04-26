@@ -11,7 +11,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Align(
+      child: const Align(
         alignment: Alignment.center,
         child: Text("My Account"),
       ),

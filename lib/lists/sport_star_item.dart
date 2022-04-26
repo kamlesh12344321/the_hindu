@@ -1,50 +1,44 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:the_hindu/lists/home_page_list_item.dart';
+import 'package:the_hindu/lists/sport_star_list_item.dart';
 import 'package:the_hindu/utils/CustomColors.dart';
 import 'package:the_hindu/utils/SportStars.dart';
 
-class SportStarItem extends StatefulWidget {
+class sportStarItem extends StatefulWidget {
   List<SportStars>? data;
 
-  SportStarItem({required this.data});
+  sportStarItem({Key? key, required this.data}) : super(key: key);
 
   @override
-  State<SportStarItem> createState() => _SportStarItemState();
+  State<sportStarItem> createState() => _sportStarItemState();
 }
 
-class _SportStarItemState extends State<SportStarItem> {
+class _sportStarItemState extends State<sportStarItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10,bottom: 10,left: 16,right: 16),
+      margin: const EdgeInsets.only(top: 10,bottom: 10,left: 16,right: 16),
       color: CustomColors.topPicksSection,
       child: Column(
           children: [
         Center(
           child: Container(
-            margin: EdgeInsets.only(top: 10),
-            child: Text(
-              "STARSPORT",
-              style: TextStyle(
-                  color: Colors.redAccent,
-                  fontSize: 24,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold
-              ),
-            ),
+            height: 20,
+            width: 106,
+            margin: const EdgeInsets.only(top: 16),
+            child: Image.asset('assets/images/sportstar.png')
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 10),
             child: ListView.builder(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             itemCount: widget.data?.length,
             itemBuilder: (context, index) {
-          return HomePageListItem(
+          return SportPageListItem(
               articleTitle: widget.data?[index].title ?? "",
               articleImageUrl: widget.data?[index].imageUrl ?? "");
         })),

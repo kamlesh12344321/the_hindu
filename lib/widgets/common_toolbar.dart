@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:the_hindu/widgets/big_text.dart';
 
 class CommonToolbar extends StatelessWidget with PreferredSizeWidget {
-  var title;
-  CommonToolbar(this.title);
+  var title  = "";
+  CommonToolbar(this.title, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: Colors.black
       ),
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
+          fontFamily: "FiraSans"
         ),
       ),
     );

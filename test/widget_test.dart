@@ -13,7 +13,7 @@ import 'package:the_hindu/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(TheHinduApp());
+    await tester.pumpWidget(const TheHinduApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

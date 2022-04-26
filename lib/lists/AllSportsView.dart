@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:the_hindu/utils/AllSports.dart';
-import 'package:the_hindu/utils/SportStars.dart';
-class AllSportsViewItem extends StatefulWidget {
-  // List<AllSports>? mapData;
+class allSportsViewItem extends StatefulWidget {
+  final Iterable<Welcome>? mapData;
 
-  // AllSportsViewItem({ required this.mapData});
+  const allSportsViewItem({Key? key,  required this.mapData}) : super(key: key);
 
   @override
-  State<AllSportsViewItem> createState() => _AllSportsViewItemState();
+  State<allSportsViewItem> createState() => _allSportsViewItemState();
 }
 
-class _AllSportsViewItemState extends State<AllSportsViewItem> {
-
+class _allSportsViewItemState extends State<allSportsViewItem> {
   @override
   Widget build(BuildContext context) {
-     // convertData(widget.mapData);
+    if(widget.mapData != null) {
+    }
     return Container();
   }
 }
-// Map? convertData(List<AllSports>? data) {
-//    Map? finalData;
-//    for(var i=0;i>data!.length;i++){
-//      var d = data[i].cricket;
-//      finalData?["k"] = d;
-//    }
-//   return finalData;
-// }
+
+

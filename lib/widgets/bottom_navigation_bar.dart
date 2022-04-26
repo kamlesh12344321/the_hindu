@@ -8,6 +8,8 @@ import 'package:the_hindu/widgets/nav_bar.dart';
 import 'package:the_hindu/widgets/the_hindu_appbar.dart';
 
 class TheHinduBottomNav extends StatefulWidget {
+  const TheHinduBottomNav({Key? key}) : super(key: key);
+
   @override
   State<TheHinduBottomNav> createState() => _TheHinduBottomNavState();
 }
@@ -16,18 +18,18 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
   int _pageIndex = 0;
   late PageController _pageController;
   List<Widget> tabPages = [
-    const HomePage(),
-    const BriefingPage(),
-    const TrendingPage(),
-    const PremiumPage(),
-    const MyAccountPage()
+     const HomePage(),
+     const BriefingPage(),
+   const TrendingPage(),
+   PremiumPage(),
+  const MyAccountPage()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
-      appBar: TheHinduAppBar(),
+      drawer: const NavBar(),
+      appBar: const TheHinduAppBar(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _pageIndex,
         backgroundColor: Colors.white,
@@ -52,7 +54,7 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
 
   void onPageChanged(int page) {
     setState(() {
-      this._pageIndex = page;
+      _pageIndex = page;
     });
   }
 

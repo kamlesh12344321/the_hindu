@@ -10,11 +10,9 @@ class TrendingPage extends StatefulWidget {
 class _TrendingPageState extends State<TrendingPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Align(
-        alignment: Alignment.center,
-        child: Text("Tranding"),
-      ),
+    return const Align(
+      alignment: Alignment.center,
+      child: Text("Tranding"),
     );
   }
 }
