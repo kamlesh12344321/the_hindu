@@ -5,10 +5,11 @@ import 'package:the_hindu/widgets/big_text.dart';
 import 'package:the_hindu/widgets/small_icon_article.dart';
 import 'package:the_hindu/widgets/small_text.dart';
 
+import '../networking/models/sport_stars.dart';
+
 class SportPageListItem extends StatefulWidget {
-  final String? articleTitle;
-  final String? articleImageUrl;
-  const SportPageListItem({Key? key,required this. articleTitle, required this. articleImageUrl}) : super(key: key);
+  final Sports? sports;
+  const SportPageListItem({Key? key,required this. sports}) : super(key: key);
 
   @override
   State<SportPageListItem> createState() => _SportPageListItemState();
@@ -20,7 +21,7 @@ class _SportPageListItemState extends State<SportPageListItem> {
     return Container(
       width: double.infinity,
       height: 112,
-      margin: const EdgeInsets.only(top: 12,bottom: 12),
+      margin: const EdgeInsets.only(top: 12,bottom: 12,right: 16,left: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,14 +35,14 @@ class _SportPageListItemState extends State<SportPageListItem> {
                   color: Colors.white,
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(widget.articleImageUrl ?? PLACE_HOLDER))),
+                      image: NetworkImage(widget.sports?.imgUrl ?? PLACE_HOLDER))),
             ),
           ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                BigText(16, Colors.black, 1, widget.articleTitle ?? ""),
+                BigText(16, Colors.black, 1, widget.sports?.title ?? ""),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

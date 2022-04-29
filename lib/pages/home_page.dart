@@ -11,10 +11,13 @@ import 'package:the_hindu/lists/sport_star_item.dart';
 import 'package:the_hindu/lists/subscribe_user.dart';
 import 'package:the_hindu/lists/top_picks_item.dart';
 import 'package:the_hindu/networking/models/article_list.dart';
+import 'package:the_hindu/networking/models/generic_data.dart';
 import 'package:the_hindu/networking/models/section_list.dart';
 import 'package:the_hindu/networking/models/sport_stars.dart';
 import 'package:the_hindu/networking/view_models/Article_list_view_model.dart';
+import 'package:the_hindu/networking/view_models/generic_list_view_model.dart';
 import 'package:the_hindu/networking/view_models/sport_stars_view_model.dart';
+import 'package:the_hindu/widgets/custom_tab_view.dart';
 import '../networking/view_models/sections_list_view_model.dart';
 import '../utils/CustomColors.dart';
 
@@ -27,19 +30,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController controller = TextEditingController();
-
-  @override
-  void initState() {
-    // futureData = fetchJsonData();
-    super.initState();
-  }
+  late SectionsViewModel viewModel;
+  late ArticleListViewModel articleListViewModel;
+  late Sections? data;
+  late HomeArticle? homeArticleData;
+  List<Article> topPicksList = [];
+  late SportStarsViewModel sportStarsViewModel;
+  late GenericViewModel genericViewModel;
+  late SportStars? sportStarsList;
+  late int _pageIndex = 0;
+  late PageController _pageController;
+  int initPosition = 0;
 
   @override
   Widget build(BuildContext context) {
-    SectionsViewModel viewModel = context.watch<SectionsViewModel>();
-    ArticleListViewModel articleListViewModel =
-        context.watch<ArticleListViewModel>();
-    Sections? data = _ui(viewModel);
+    viewModel = context.watch<SectionsViewModel>();
+    articleListViewModel = context.watch<ArticleListViewModel>();
+    data = viewModel.sectionList;
     Section homeSection = Section();
     homeSection.sectionId = "1000";
     homeSection.name = "Home";
@@ -47,143 +54,131 @@ class _HomePageState extends State<HomePage> {
     if (data?.data?[0].name != "Home") {
       data?.data?.insert(0, homeSection);
     }
-    HomeArticle? homeArticleData = _uiArticles(articleListViewModel);
-    List<Article> topPicksList = [];
-    SportStarsViewModel sportStarsViewModel =
-        context.watch<SportStarsViewModel>();
-    SportStars? sportStarsList = _uiSportStars(sportStarsViewModel);
-    print(sportStarsList);
+    homeArticleData = articleListViewModel.homeArticles;
+    sportStarsViewModel = context.watch<SportStarsViewModel>();
+    sportStarsList = sportStarsViewModel.sportStars;
     String selectedReport = '';
-    return Column(
-      children: [
-        Container(
-          height: 30,
-          margin: EdgeInsets.only(left: 10, right: 10),
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: data?.data?.length,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.all(5),
-                child: Text(
-                  data?.data?[index].name ?? "",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: "FiraSans"),
-                ),
-              );
-            },
-          ),
-        ),
-        Expanded(
-          child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: homeArticleData?.data?.length,
-              itemBuilder: (context, index) {
-                Article ar = homeArticleData!.data![index];
-                if (topPicksList.length < 5) {
-                  topPicksList.add(ar);
-                }
-                if (index == 0) {
-                  return FullImageViewItem(
-                    articleImageUrl: ar.imgUrl,
-                    articleTitle: ar.title,
-                  );
-                } else if (index == 3) {
-                  return BannerAds();
-                } else if (index == 6) {
-                  return SubscribeUserTemplate();
-                } else if (index == 10) {
-                  return Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    color: CustomColors.topPicksSection,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+    return SafeArea(
+      child: CustomTabView(
+        initPosition: initPosition,
+        itemCount: data?.data?.length,
+        tabBuilder: (context, index) => Tab(text: data?.data?[index].name),
+        pageBuilder: (context, index) {
+          if (index == 0) {
+            return Container(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: homeArticleData?.data?.length,
+                itemBuilder: (context, index) {
+                  Article ar = homeArticleData!.data![index];
+                  if (topPicksList.length < 5) {
+                    topPicksList.add(ar);
+                  }
+                  if (index == 0) {
+                    return InkWell(
+                      onTap: (){
+                        _sendDataToSecondScreen(context,ar.description);
+                      },
+                      child: FullImageViewItem(article: ar,),
+                    );
+                  } else if (index == 3) {
+                    return BannerAds();
+                  } else if (index == 6) {
+                    return SubscribeUserTemplate();
+                  } else if (index == 10) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      color: CustomColors.topPicksSection,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 10, left: 10),
+                                child: Text(
+                                  "Top Picks",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: "FiraSans",
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10, right: 10),
+                                child: Text(
+                                  "View more",
+                                  style: TextStyle(
+                                      fontFamily: "FiraSans",
+                                      fontSize: 16,
+                                      color: Colors.lightBlue,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              )
+                            ],
+                          ),
+                          TopPicksView(data: topPicksList),
+                        ],
+                      ),
+                    );
+                  } else if (index == 13) {
+                    return sportStarItem(
+                      data: sportStarsList?.data,
+                    );
+                  } else if (index == 16) {
+                    return FullWidthImageItem(
+                      articleImageUrl: ar.imgUrl,
+                      articleTitle: ar.title,
+                    );
+                  } else if (index + 1 == homeArticleData?.data?.length) {
+                    List<SubSection> sportsChipList =
+                        _getSportChipsList(viewModel);
+                    print(sportsChipList);
+                    return Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 10, left: 10),
-                              child: Text(
-                                "Top Picks",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: "FiraSans",
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 10, right: 10),
-                              child: Text(
-                                "View more",
-                                style: TextStyle(
-                                    fontFamily: "FiraSans",
-                                    fontSize: 16,
-                                    color: Colors.lightBlue,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            )
-                          ],
-                        ),
-                        TopPicksView(data: topPicksList),
+                        SingleChildScrollView(
+                          child: SingleSelectChip(
+                              reportList: sportsChipList,
+                              onSelectionChanged: (selectedItem) {
+                                setState(() {
+                                  selectedReport = selectedItem;
+                                });
+                              }),
+                        )
                       ],
-                    ),
-                  );
-                } else if (index == 13) {
-                  return sportStarItem(
-                    data: sportStarsList?.data,
-                  );
-                } else if (index == 16) {
-                  return FullWidthImageItem(
-                    articleImageUrl: ar.imgUrl,
+                    );
+                  }
+                  return HomePageListItem(
                     articleTitle: ar.title,
+                    articleImageUrl: ar.imgUrl,
                   );
-                } else if (index + 1 == homeArticleData.data?.length) {
-                  List<SubSection> sportsChipList =
-                      _getSportChipsList(viewModel);
-                  print(sportsChipList);
-                  return Column(
-                    children: [
-                      SingleChildScrollView(
-                        child: SingleSelectChip(
-                            reportList: sportsChipList,
-                            onSelectionChanged: (selectedItem) {
-                              setState(() {
-                                selectedReport = selectedItem;
-                              });
-                            }),
-                      )
-                    ],
-                  );
-                }
-                return HomePageListItem(
-                  articleTitle: ar.title,
-                  articleImageUrl: ar.imgUrl,
-                );
-              },
-            ),
-          ),
-        )
-      ],
+                },
+              ),
+            );
+          } else {
+
+            return Container(
+              child: Center(
+                child: Text("Coming soon",
+                style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400
+                ),),
+              ),
+            );
+          }
+        },
+        onPositionChange: (index) {
+          print('current position: $index');
+          initPosition = index;
+        },
+        onScroll: (position) => print('$position'),
+      ),
     );
-  }
-
-  _ui(SectionsViewModel? viewModel) {
-    return viewModel?.sectionList;
-  }
-
-  _uiArticles(ArticleListViewModel? viewModel) {
-    return viewModel?.homeArticles;
-  }
-
-  _uiSportStars(SportStarsViewModel? viewModel) {
-    return viewModel?.sportStars;
   }
 
   _getSportChipsList(SectionsViewModel? sectionsViewModel) {
@@ -252,6 +247,6 @@ _pageViewBuilder(Sections sections) {
       itemCount: sections.data?.length,
       controller: pageController,
       itemBuilder: (context, index) {
-       return Container();
+        return Container();
       });
 }

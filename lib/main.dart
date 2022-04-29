@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_hindu/networking/view_models/Article_list_view_model.dart';
+import 'package:the_hindu/networking/view_models/generic_list_view_model.dart';
 import 'package:the_hindu/networking/view_models/sport_stars_view_model.dart';
 import 'package:the_hindu/widgets/bottom_navigation_bar.dart';
 
@@ -27,6 +28,7 @@ class _TheHinduState extends State<TheHinduApp> {
           ChangeNotifierProvider(create: (_) => SectionsViewModel()),
           ChangeNotifierProvider(create: (_) => ArticleListViewModel()),
           ChangeNotifierProvider(create: (_) => SportStarsViewModel()),
+          ChangeNotifierProvider(create: (_) => GenericViewModel()),
         ],
     child:  MaterialApp(
         debugShowCheckedModeBanner: false,

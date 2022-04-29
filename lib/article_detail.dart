@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:the_hindu/widgets/common_toolbar.dart';
 
 class ArticleDetail extends StatefulWidget {
@@ -16,12 +17,11 @@ class _ArticleDetailState extends State<ArticleDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonToolbar("Article Detail"),
-      body: Text(widget.description ?? "",
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 25,
-        fontWeight: FontWeight.bold
-      ),)
+      body: SingleChildScrollView(
+        child: Html(
+          data: widget.description,
+        ),
+      )
     );
   }
 }

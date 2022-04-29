@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SmallText extends StatelessWidget {
-  final String text;
+  final String? text;
   double? size = 14;
   Color? color = Colors.black12;
   double? wordSpacing = 2.0;
@@ -12,7 +12,7 @@ class SmallText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text!,
       style: TextStyle(
         color: color,
         fontSize: size,

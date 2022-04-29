@@ -18,7 +18,7 @@ class _sportStarItemState extends State<sportStarItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
+      margin: const EdgeInsets.only(top: 10, bottom: 10,),
       color: CustomColors.topPicksSection,
       child: Column(children: [
         Center(
@@ -36,9 +36,7 @@ class _sportStarItemState extends State<sportStarItem> {
                 scrollDirection: Axis.vertical,
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return SportPageListItem(
-                      articleTitle: widget.data?[index].title?? "",
-                      articleImageUrl: widget.data?[index].imgUrl ?? PLACE_HOLDER);
+                  return SportPageListItem(sports: widget.data?[index],);
                 })),
       ]),
     );
