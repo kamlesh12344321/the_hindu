@@ -18,11 +18,11 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
   int _pageIndex = 0;
   late PageController _pageController;
   List<Widget> tabPages = [
-     const HomePage(),
-     const BriefingPage(),
-   const TrendingPage(),
-   PremiumPage(),
-  const MyAccountPage()
+    const HomePage(),
+    const BriefingPage(),
+    const TrendingPage(),
+    PremiumPage(),
+    const MyAccountPage()
   ];
 
   @override
@@ -57,7 +57,6 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
       _pageIndex = page;
     });
   }
-
 
   void onTabTapped(int index) {
     setState(() {

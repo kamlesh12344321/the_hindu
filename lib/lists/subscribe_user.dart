@@ -10,22 +10,16 @@ class SubscribeUserTemplate extends StatefulWidget {
 class _SubscribeUserTemplateState extends State<SubscribeUserTemplate> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10,bottom: 10),
-      width: 300,
+    return  Container(
+      width: double.infinity,
       height: 250,
-      decoration: const BoxDecoration(
-        color: Colors.blueAccent,
-      ),
-      child: const Center(
-        child: Text(
-          "Subscribe User",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-          ),
-        ),
-      ),
+      margin: const EdgeInsets.only(right: 10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage("http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/ads.png"))),
     );
   }
 }

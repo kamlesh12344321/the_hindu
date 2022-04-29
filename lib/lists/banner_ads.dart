@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BannerAds extends StatefulWidget {
-  const BannerAds({Key? key}) : super(key: key);
+  final String? articleImageUrl;
+
+  const BannerAds({Key? key, this.articleImageUrl}) : super(key: key);
 
   @override
   State<BannerAds> createState() => _BannerAdsState();
@@ -10,23 +12,16 @@ class BannerAds extends StatefulWidget {
 class _BannerAdsState extends State<BannerAds> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 40,top: 10,bottom: 10,right: 40),
+    return  Container(
       width: 300,
       height: 250,
+      margin: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-        color: Colors.blueAccent,
-        borderRadius: BorderRadius.circular(5)
-      ),
-      child: const Center(
-        child: Text(
-          "Ads",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-          ),
-        ),
-      ),
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage("http://hindumysqlstaging.ninestars.in/admin/assets/images/icons/th/Light/xxhdpi/ads.png"))),
     );
   }
 }

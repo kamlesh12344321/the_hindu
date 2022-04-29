@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:the_hindu/networking/utils/section_constants.dart';
 
 class FullImageViewItem extends StatefulWidget {
  final String? articleTitle;
  final String? articleImageUrl;
 
-  const FullImageViewItem({Key? key, required this. articleTitle, required this. articleImageUrl}) : super(key: key);
+  const FullImageViewItem({Key? key, this. articleTitle,  this. articleImageUrl}) : super(key: key);
 
   @override
   State<FullImageViewItem> createState() => _FullImageViewItemState();
@@ -36,7 +37,7 @@ class _FullImageViewItemState extends State<FullImageViewItem> {
         color: Colors.white,
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(widget.articleImageUrl!)
+          image: NetworkImage(widget.articleImageUrl ?? PLACE_HOLDER)
         )
       ),
     );

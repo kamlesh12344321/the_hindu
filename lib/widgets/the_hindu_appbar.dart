@@ -14,7 +14,9 @@ class TheHinduAppBar extends StatelessWidget with PreferredSizeWidget {
         },
         icon: Image.asset(
           "assets/images/ham.png",
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
+          height: 25,
+          width: 25,
         ),
       ),
       title: Row(
@@ -22,9 +24,9 @@ class TheHinduAppBar extends StatelessWidget with PreferredSizeWidget {
         children: [
           Image.asset(
             'assets/images/logo_actionbar.png',
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
             height: 23,
-            width: 190,
+            width: 200,
           ),
         ],
       ),

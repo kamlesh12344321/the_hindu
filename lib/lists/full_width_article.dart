@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_hindu/networking/utils/section_constants.dart';
 
 import '../widgets/big_text.dart';
 
@@ -26,7 +27,7 @@ class _FullWidthImageItemState extends State<FullWidthImageItem> {
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage(widget.articleImageUrl!)
+              image: NetworkImage(widget.articleImageUrl ?? PLACE_HOLDER)
           )
       ),
     );

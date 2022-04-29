@@ -1,22 +1,21 @@
 // ignore_for_file: prefer_collection_literals
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 import 'package:the_hindu/article_detail.dart';
-import 'package:the_hindu/lists/AllSportsView.dart';
 import 'package:the_hindu/lists/banner_ads.dart';
 import 'package:the_hindu/lists/full_image_view_item.dart';
 import 'package:the_hindu/lists/full_width_article.dart';
 import 'package:the_hindu/lists/home_page_list_item.dart';
-import 'package:flutter/services.dart' as rootBundle;
 import 'package:the_hindu/lists/sport_star_item.dart';
 import 'package:the_hindu/lists/subscribe_user.dart';
 import 'package:the_hindu/lists/top_picks_item.dart';
-import 'package:the_hindu/utils/AllSports.dart';
-import 'package:the_hindu/utils/HomeData1.dart';
-import 'package:the_hindu/utils/SportStars.dart';
-import 'package:the_hindu/utils/top_picks.dart';
-
+import 'package:the_hindu/networking/models/article_list.dart';
+import 'package:the_hindu/networking/models/section_list.dart';
+import 'package:the_hindu/networking/models/sport_stars.dart';
+import 'package:the_hindu/networking/view_models/Article_list_view_model.dart';
+import 'package:the_hindu/networking/view_models/sport_stars_view_model.dart';
+import '../networking/view_models/sections_list_view_model.dart';
 import '../utils/CustomColors.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,66 +26,79 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<List<HomeData1>> futureData;
   TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
+    // futureData = fetchJsonData();
     super.initState();
-    futureData = fetchJsonData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: loadHomeData(),
-    );
-  }
-
-  Future<List<HomeData1>> fetchJsonData() async {
-    final response =
-        await rootBundle.rootBundle.loadString('assets/sample1.json');
-    List? jsonResponse = json.decode(response);
-    return jsonResponse!.map((e) => HomeData1.fromJson(e)).toList();
-  }
-
-  Widget loadHomeData() {
-    return FutureBuilder(
-      future: futureData,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(
-            child: Text("${snapshot.error}"),
-          );
-        } else if (snapshot.hasData) {
-          List<HomeData1>? data1 = snapshot.data as List<HomeData1>?;
-          return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: data1?.length,
-              itemBuilder: (BuildContext context, int index) {
-                String? title = data1?[index].articalTitle;
-                String? image = data1?[index].imageUrl;
-                String? viewType = data1?[index].viewType;
-                String? des = data1?[index].articleDes;
-                if (viewType == "1") {
-                  return ListTile(
-                    title: FullImageViewItem(
-                        articleTitle: title, articleImageUrl: image),
-                    onTap: () => _sendDataToSecondScreen(context, des),
+    SectionsViewModel viewModel = context.watch<SectionsViewModel>();
+    ArticleListViewModel articleListViewModel =
+        context.watch<ArticleListViewModel>();
+    Sections? data = _ui(viewModel);
+    Section homeSection = Section();
+    homeSection.sectionId = "1000";
+    homeSection.name = "Home";
+    homeSection.subSections = [];
+    if (data?.data?[0].name != "Home") {
+      data?.data?.insert(0, homeSection);
+    }
+    HomeArticle? homeArticleData = _uiArticles(articleListViewModel);
+    List<Article> topPicksList = [];
+    SportStarsViewModel sportStarsViewModel =
+        context.watch<SportStarsViewModel>();
+    SportStars? sportStarsList = _uiSportStars(sportStarsViewModel);
+    print(sportStarsList);
+    String selectedReport = '';
+    return Column(
+      children: [
+        Container(
+          height: 30,
+          margin: EdgeInsets.only(left: 10, right: 10),
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: data?.data?.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.all(5),
+                child: Text(
+                  data?.data?[index].name ?? "",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: "FiraSans"),
+                ),
+              );
+            },
+          ),
+        ),
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: homeArticleData?.data?.length,
+              itemBuilder: (context, index) {
+                Article ar = homeArticleData!.data![index];
+                if (topPicksList.length < 5) {
+                  topPicksList.add(ar);
+                }
+                if (index == 0) {
+                  return FullImageViewItem(
+                    articleImageUrl: ar.imgUrl,
+                    articleTitle: ar.title,
                   );
-                } else if (viewType == "2") {
-                  return ListTile(
-                    title: HomePageListItem(
-                      articleTitle: title,
-                      articleImageUrl: image,
-                    ),
-                  );
-                } else if (viewType == "3") {
-                  return const BannerAds();
-                } else if (viewType == "4") {
-                  return const SubscribeUserTemplate();
-                } else if (viewType == "5") {
-                  List? data = data1![index].topPicks;
+                } else if (index == 3) {
+                  return BannerAds();
+                } else if (index == 6) {
+                  return SubscribeUserTemplate();
+                } else if (index == 10) {
                   return Container(
                     margin: const EdgeInsets.only(top: 10),
                     color: CustomColors.topPicksSection,
@@ -97,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 10,left: 10),
+                              margin: EdgeInsets.only(top: 10, left: 10),
                               child: Text(
                                 "Top Picks",
                                 style: TextStyle(
@@ -106,51 +118,84 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.w700),
                               ),
                             ),
-                             Container(
-                             margin: EdgeInsets.only(top: 10,right: 10),
-                               child: Text(
-                                 "View more",
-                                 style: TextStyle(
-                                     fontFamily: "FiraSans",
-                                     fontSize: 16,
-                                     color: Colors.lightBlue,
-                                 fontWeight: FontWeight.w400),
-                               ),
-                             )
+                            Container(
+                              margin: EdgeInsets.only(top: 10, right: 10),
+                              child: Text(
+                                "View more",
+                                style: TextStyle(
+                                    fontFamily: "FiraSans",
+                                    fontSize: 16,
+                                    color: Colors.lightBlue,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            )
                           ],
                         ),
-                        TopPicksView(
-                          data: data?.map((e) => TopPicks.fromJson(e)).toList(),
-                        ),
+                        TopPicksView(data: topPicksList),
                       ],
                     ),
                   );
-                } else if (viewType == "6") {
-                  List? data = data1![index].sportStarsList;
+                } else if (index == 13) {
                   return sportStarItem(
-                    data: data?.map((e) => SportStars.fromJson(e)).toList(),
+                    data: sportStarsList?.data,
                   );
-                } else if (viewType == "7") {
+                } else if (index == 16) {
                   return FullWidthImageItem(
-                    articleTitle: title,
-                    articleImageUrl: image,
+                    articleImageUrl: ar.imgUrl,
+                    articleTitle: ar.title,
                   );
-                } else if (viewType == "8") {
-                  List? data = data1?[index].allSports;
-                  return allSportsViewItem(
-                      mapData: data?.map((e) => Welcome.fromJson(e)));
+                } else if (index + 1 == homeArticleData.data?.length) {
+                  List<SubSection> sportsChipList =
+                      _getSportChipsList(viewModel);
+                  print(sportsChipList);
+                  return Column(
+                    children: [
+                      SingleChildScrollView(
+                        child: SingleSelectChip(
+                            reportList: sportsChipList,
+                            onSelectionChanged: (selectedItem) {
+                              setState(() {
+                                selectedReport = selectedItem;
+                              });
+                            }),
+                      )
+                    ],
+                  );
                 }
-                return const Center(
-                  child: Text(""),
+                return HomePageListItem(
+                  articleTitle: ar.title,
+                  articleImageUrl: ar.imgUrl,
                 );
-              });
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
+              },
+            ),
+          ),
+        )
+      ],
     );
+  }
+
+  _ui(SectionsViewModel? viewModel) {
+    return viewModel?.sectionList;
+  }
+
+  _uiArticles(ArticleListViewModel? viewModel) {
+    return viewModel?.homeArticles;
+  }
+
+  _uiSportStars(SportStarsViewModel? viewModel) {
+    return viewModel?.sportStars;
+  }
+
+  _getSportChipsList(SectionsViewModel? sectionsViewModel) {
+    Sections? sections = sectionsViewModel?.sectionList;
+    List<Section>? sectionList = sections?.data;
+    if (sectionList!.isNotEmpty) {
+      for (Section section in sectionList) {
+        if (section.subSections!.isNotEmpty) {
+          return section.subSections;
+        }
+      }
+    }
   }
 
   void _sendDataToSecondScreen(BuildContext context, String? des) {
@@ -162,4 +207,51 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
   }
+}
+
+class SingleSelectChip extends StatefulWidget {
+  final List<SubSection>? reportList;
+  final Function onSelectionChanged;
+
+  SingleSelectChip(
+      {required this.reportList, required this.onSelectionChanged});
+
+  @override
+  _SingleSelectChipState createState() => _SingleSelectChipState();
+}
+
+class _SingleSelectChipState extends State<SingleSelectChip> {
+  String selectedChoices = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+        children: widget.reportList!
+            .map((item) => (Container(
+                  padding: const EdgeInsets.all(2.0),
+                  child: ChoiceChip(
+                    selectedColor: Colors.lightBlueAccent,
+                    label: Text(item.name ?? ""),
+                    selected: selectedChoices.contains(item.sectionId ?? ""),
+                    onSelected: (selected) {
+                      setState(() {
+                        selectedChoices = item.sectionId ?? "";
+                      });
+                    },
+                  ),
+                )))
+            .toList());
+  }
+}
+
+_pageViewBuilder(Sections sections) {
+  PageController pageController = PageController();
+  PageView.builder(
+      scrollDirection: Axis.horizontal,
+      pageSnapping: false,
+      itemCount: sections.data?.length,
+      controller: pageController,
+      itemBuilder: (context, index) {
+       return Container();
+      });
 }

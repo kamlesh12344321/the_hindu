@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   # Make API request dependency_validator:
   http: ^0.13.3
+  provider: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -87,17 +88,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-#    fonts:
-#      - family: FiraSans
-#        fonts:
-#          - asset: asset/fonts/FiraSans-Bold.ttf
-#          - asset: asset/fonts/FiraSans-Regular.ttf
-#          - asset: asset/fonts/FiraSans-SemiBold.ttf
-#          - asset: asset/fonts/TundraOffc.ttf
-#          - asset: asset/fonts/TundraOffc-Bold.ttf
-#          - asset: asset/fonts/TundraOffc-BoldItalic.ttf
-#          - asset: asset/fonts/TundraOffc-Italic.ttf
-
   fonts:
     - family: FiraSans
       fonts:

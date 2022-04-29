@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:the_hindu/networking/models/article_list.dart';
 import 'package:the_hindu/utils/CustomColors.dart';
-import 'package:the_hindu/utils/top_picks.dart';
+
+import '../networking/utils/section_constants.dart';
 
 class TopPicksView extends StatefulWidget {
-  List<TopPicks>? data;
+  List<Article>? data;
 
   TopPicksView({Key? key, required this.data}) : super(key: key);
 
@@ -39,7 +41,7 @@ class _TopPicksViewState extends State<TopPicksView> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                  widget.data?[index].imageUrl ?? ""))),
+                                  widget.data?[index].imgUrl ?? PLACE_HOLDER))),
                     ),
                   ),
                   Expanded(

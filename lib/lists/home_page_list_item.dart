@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:the_hindu/networking/utils/section_constants.dart';
 import 'package:the_hindu/widgets/big_text.dart';
 import 'package:the_hindu/widgets/small_icon_article.dart';
 import 'package:the_hindu/widgets/small_text.dart';
@@ -33,7 +34,7 @@ class _HomePageListItemState extends State<HomePageListItem> {
                   color: Colors.white,
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(widget.articleImageUrl ?? ""))),
+                      image: NetworkImage(widget.articleImageUrl ?? PLACE_HOLDER))),
             ),
           ),
           Expanded(
