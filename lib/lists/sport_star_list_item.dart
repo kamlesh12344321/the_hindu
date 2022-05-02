@@ -35,7 +35,7 @@ class _SportPageListItemState extends State<SportPageListItem> {
                   color: Colors.white,
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(widget.sports?.imgUrl ?? PLACE_HOLDER))),
+                      image: NetworkImage(widget.sports?.imgUrl ?? PLACE_HOLDER_SMALL))),
             ),
           ),
           Expanded(

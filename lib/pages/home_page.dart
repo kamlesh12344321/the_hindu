@@ -72,14 +72,17 @@ class _HomePageState extends State<HomePage> {
                 shrinkWrap: true,
                 itemCount: homeArticleData?.data?.length,
                 itemBuilder: (context, index) {
-                  Article ar = homeArticleData!.data![index];
+                  Article? ar = homeArticleData?.data?[index];
                   if (topPicksList.length < 5) {
-                    topPicksList.add(ar);
+                    if(ar != null){
+                      topPicksList.add(ar);
+                    }
+
                   }
                   if (index == 0) {
                     return InkWell(
                       onTap: (){
-                        _sendDataToSecondScreen(context,ar.description);
+                        _sendDataToSecondScreen(context,ar?.description);
                       },
                       child: FullImageViewItem(article: ar,),
                     );
@@ -99,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Container(
                                 margin: EdgeInsets.only(top: 10, left: 10),
-                                child: Text(
+                                child: const Text(
                                   "Top Picks",
                                   style: TextStyle(
                                       fontSize: 16,
@@ -109,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 10, right: 10),
-                                child: Text(
+                                child: const Text(
                                   "View more",
                                   style: TextStyle(
                                       fontFamily: "FiraSans",
@@ -129,9 +132,14 @@ class _HomePageState extends State<HomePage> {
                       data: sportStarsList?.data,
                     );
                   } else if (index == 16) {
-                    return FullWidthImageItem(
-                      articleImageUrl: ar.imgUrl,
-                      articleTitle: ar.title,
+                    return ListTile(
+                      title: FullWidthImageItem(
+                        articleImageUrl: ar?.imgUrl,
+                        articleTitle: ar?.title,
+                      ),
+                      onTap: (){
+                        _sendDataToSecondScreen(context, ar?.description);
+                      },
                     );
                   } else if (index + 1 == homeArticleData?.data?.length) {
                     List<SubSection> sportsChipList =
@@ -151,9 +159,14 @@ class _HomePageState extends State<HomePage> {
                       ],
                     );
                   }
-                  return HomePageListItem(
-                    articleTitle: ar.title,
-                    articleImageUrl: ar.imgUrl,
+                  return ListTile(
+                    title:  HomePageListItem(
+                      articleTitle: ar?.title,
+                      articleImageUrl: ar?.imgUrl,
+                    ),
+                    onTap: (){
+                      _sendDataToSecondScreen(context, ar?.description);
+                    },
                   );
                 },
               ),
@@ -235,7 +248,7 @@ class _SingleSelectChipState extends State<SingleSelectChip> {
                     },
                   ),
                 )))
-            .toList());
+            .toList(),);
   }
 }
 

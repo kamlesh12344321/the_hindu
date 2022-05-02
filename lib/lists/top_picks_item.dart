@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:the_hindu/networking/models/article_list.dart';
 import 'package:the_hindu/utils/CustomColors.dart';
 
+import '../article_detail.dart';
 import '../networking/utils/section_constants.dart';
 
 class TopPicksView extends StatefulWidget {
@@ -31,18 +32,23 @@ class _TopPicksViewState extends State<TopPicksView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: Container(
-                      width: 149,
-                      height: 112,
-                      margin: const EdgeInsets.only(right: 5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  widget.data?[index].imgUrl ?? PLACE_HOLDER))),
-                    ),
+                    child: InkWell(
+                      onTap: (){
+                        _sendDataToSecondScreen(context, widget.data?[index].description);
+                      },
+                      child: Container(
+                        width: 149,
+                        height: 112,
+                        margin: const EdgeInsets.only(right: 5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    widget.data?[index].imgUrl ?? PLACE_HOLDER_SMALL),),),
+                      ),
+                    )
                   ),
                   Expanded(
                     child: Center(
@@ -64,6 +70,17 @@ class _TopPicksViewState extends State<TopPicksView> {
               ),
             );
           },
+        ),
+    );
+  }
+
+  void _sendDataToSecondScreen(BuildContext context, String? des) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ArticleDetail(
+            description: des,
+          ),
         ));
   }
 }
