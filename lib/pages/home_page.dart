@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
     viewModel = context.watch<SectionsViewModel>();
     articleListViewModel = context.watch<ArticleListViewModel>();
     data = viewModel.sectionList;
+    int? lengthValue = data?.data?.length ?? 0;
     Section homeSection = Section();
     homeSection.sectionId = "1000";
     homeSection.name = "Home";
@@ -62,12 +63,13 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: CustomTabView(
         initPosition: initPosition,
-        itemCount: data?.data?.length,
+        itemCount:lengthValue,
         tabBuilder: (context, index) => Tab(text: data?.data?[index].name),
         pageBuilder: (context, index) {
           if (index == 0) {
             return Container(
               child: ListView.builder(
+                addAutomaticKeepAlives: true,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: homeArticleData?.data?.length,
@@ -77,7 +79,6 @@ class _HomePageState extends State<HomePage> {
                     if(ar != null){
                       topPicksList.add(ar);
                     }
-
                   }
                   if (index == 0) {
                     return InkWell(
@@ -147,15 +148,34 @@ class _HomePageState extends State<HomePage> {
                     print(sportsChipList);
                     return Column(
                       children: [
-                        SingleChildScrollView(
-                          child: SingleSelectChip(
-                              reportList: sportsChipList,
-                              onSelectionChanged: (selectedItem) {
-                                setState(() {
-                                  selectedReport = selectedItem;
-                                });
-                              }),
-                        )
+                        // Container(
+                        //   height: 58,
+                        //   color: Colors.blueAccent,
+                        //   child: ListView.builder(
+                        //     scrollDirection: Axis.horizontal,
+                        //     itemCount: sportsChipList.length,
+                        //     itemBuilder: (context, index){
+                        //       SubSection su = sportsChipList[index];
+                        //       return ListTile(
+                        //         title: Container(
+                        //             margin: EdgeInsets.symmetric(horizontal: 20),
+                        //             child: Center(
+                        //               child:  Text(su.name ?? '',
+                        //                 style: TextStyle(
+                        //                     color: Colors.white,
+                        //                     fontSize: 24,
+                        //                     fontWeight: FontWeight.w600
+                        //                 ),),
+                        //             )
+                        //         ),
+                        //         onTap: (){
+                        //           su.isSelected = true;
+                        //           fetchSubSectionData(su.sectionId);
+                        //         },
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     );
                   }
@@ -186,7 +206,6 @@ class _HomePageState extends State<HomePage> {
           }
         },
         onPositionChange: (index) {
-          print('current position: $index');
           initPosition = index;
         },
         onScroll: (position) => print('$position'),
@@ -215,6 +234,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
   }
+
+  void fetchSubSectionData(var sction_id) {}
 }
 
 class SingleSelectChip extends StatefulWidget {
@@ -250,16 +271,4 @@ class _SingleSelectChipState extends State<SingleSelectChip> {
                 )))
             .toList(),);
   }
-}
-
-_pageViewBuilder(Sections sections) {
-  PageController pageController = PageController();
-  PageView.builder(
-      scrollDirection: Axis.horizontal,
-      pageSnapping: false,
-      itemCount: sections.data?.length,
-      controller: pageController,
-      itemBuilder: (context, index) {
-        return Container();
-      });
 }

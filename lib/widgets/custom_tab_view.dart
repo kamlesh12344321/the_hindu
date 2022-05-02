@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTabView extends StatefulWidget {
-  final int? itemCount;
+  final int itemCount;
   final IndexedWidgetBuilder? tabBuilder;
   final IndexedWidgetBuilder? pageBuilder;
   final Widget? stub;
@@ -10,7 +10,7 @@ class CustomTabView extends StatefulWidget {
   final int? initPosition;
 
 
-  CustomTabView({this.itemCount, this.tabBuilder, this.pageBuilder, this.stub,
+  CustomTabView({ required this.itemCount, this.tabBuilder, this.pageBuilder, this.stub,
     this.onPositionChange, this.onScroll, this.initPosition});
 
   @override
@@ -26,13 +26,13 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
   void initState() {
     _currentPosition = widget.initPosition!;
     controller = TabController(
-      length: widget.itemCount!,
+      length: widget.itemCount,
       vsync: this,
       initialIndex: _currentPosition,
     );
     controller.addListener(onPositionChange);
     controller.animation!.addListener(onScroll);
-    _currentCount = widget.itemCount!;
+    _currentCount = widget.itemCount;
     super.initState();
   }
 
@@ -47,8 +47,8 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
         _currentPosition = widget.initPosition!;
       }
 
-      if (_currentPosition > widget.itemCount! - 1) {
-        _currentPosition = widget.itemCount! - 1;
+      if (_currentPosition > widget.itemCount - 1) {
+        _currentPosition = widget.itemCount - 1;
         _currentPosition = _currentPosition < 0 ? 0 :
         _currentPosition;
         if (widget.onPositionChange is ValueChanged<int>) {
@@ -60,10 +60,10 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
         }
       }
 
-      _currentCount = widget.itemCount!;
+      _currentCount = widget.itemCount;
       setState(() {
         controller = TabController(
-          length: widget.itemCount!,
+          length: widget.itemCount,
           vsync: this,
           initialIndex: _currentPosition,
         );
@@ -87,7 +87,7 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    if (widget.itemCount! < 1) return widget.stub ?? Container();
+    if (widget.itemCount < 1) return widget.stub ?? Container();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -108,7 +108,7 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
               ),
             ),
             tabs: List.generate(
-              widget.itemCount!,
+              widget.itemCount,
                   (index) => widget.tabBuilder!(context, index),
             ),
           ),
@@ -117,7 +117,7 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
           child: TabBarView(
             controller: controller,
             children: List.generate(
-              widget.itemCount!,
+              widget.itemCount,
                   (index) => widget.pageBuilder!(context, index),
             ),
           ),
