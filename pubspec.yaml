@@ -75,6 +75,7 @@ flutter:
     - assets/images/fav.png
     - assets/images/home_selected.png
     - assets/images/sportstar.png
+    - assets/images/place_holder.png
     - assets/sample.json
     - assets/sample1.json
 
@@ -100,6 +101,9 @@ flutter:
         - asset: assets/fonts/TundraOffc-Bold.ttf
         - asset: assets/fonts/TundraOffc-BoldItalic.ttf
         - asset: assets/fonts/TundraOffc-Italic.ttf
+
+
+
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

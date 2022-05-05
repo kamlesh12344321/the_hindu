@@ -18,11 +18,11 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
   int _pageIndex = 0;
   late PageController _pageController;
   List<Widget> tabPages = [
-    const HomePage(),
-    const BriefingPage(),
-    const TrendingPage(),
+    HomePage(),
+    BriefingPage(),
+    TrendingPage(),
     PremiumPage(),
-    const MyAccountPage()
+    MyAccountPage()
   ];
 
   @override
@@ -39,8 +39,7 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Breifing"),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: "Trending"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.wrong_location), label: "Premium"),
+          BottomNavigationBarItem(icon: Icon(Icons.wrong_location), label: "Premium"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "My Account")
         ],
       ),
@@ -48,6 +47,7 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
         children: tabPages,
         onPageChanged: onPageChanged,
         controller: _pageController,
+
       ),
     );
   }

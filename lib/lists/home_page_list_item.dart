@@ -22,7 +22,7 @@ class _HomePageListItemState extends State<HomePageListItem> {
     return Container(
       width: double.infinity,
       height: 112,
-      margin: const EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16),
+      margin: const EdgeInsets.only(top: 12, bottom: 12,),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,7 +38,6 @@ class _HomePageListItemState extends State<HomePageListItem> {
                   fit: BoxFit.cover,
                   image: NetworkImage(
                     widget.articleImageUrl ?? PLACE_HOLDER_SMALL,
-
                   ),
                 ),
               ),

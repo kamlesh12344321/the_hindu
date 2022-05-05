@@ -11,10 +11,12 @@ class GenericViewModel extends ChangeNotifier{
   GenericList? _genericList;
   var id;
 
-  GenericViewModel({this.id});
+  GenericViewModel({this.id}){
+    getGenericList();
+  }
 
   bool get loading => _isLoading;
-  GenericList? get genericList => _genericList;
+  GenericList? get get_genericList => _genericList;
 
 
   setLoading(bool loading) async {
@@ -22,16 +24,15 @@ class GenericViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  setGenericListModel( GenericList genericList){
-    _genericList = genericList;
+  setGenericListModel( GenericList? genericList){
+    genericList = _genericList;
   }
 
   getGenericList() async {
     setLoading(true);
     var response = await SectionServices.getGenericArticles(id);
     if(response is Success){
-      setGenericListModel(response.response as GenericList);
+      setGenericListModel(response.response as GenericList?);
     }
-
   }
 }

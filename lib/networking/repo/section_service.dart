@@ -79,7 +79,7 @@ class SectionServices{
     }
   }
 
-  static Future<Object> getGenericArticles(int id) async{
+  static Future<Object> getGenericArticles(String? id) async{
     try{
       Map data = {
         "section_id": id,

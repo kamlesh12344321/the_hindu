@@ -18,8 +18,10 @@ import 'package:the_hindu/networking/view_models/Article_list_view_model.dart';
 import 'package:the_hindu/networking/view_models/generic_list_view_model.dart';
 import 'package:the_hindu/networking/view_models/sport_stars_view_model.dart';
 import 'package:the_hindu/widgets/custom_tab_view.dart';
+import '../lists/AllSportsView.dart';
 import '../networking/view_models/sections_list_view_model.dart';
 import '../utils/CustomColors.dart';
+import '../widgets/ads_animation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,9 +43,11 @@ class _HomePageState extends State<HomePage> {
   late int _pageIndex = 0;
   late PageController _pageController;
   int initPosition = 0;
+  late ScrollController _controller;
 
   @override
   Widget build(BuildContext context) {
+    _controller = ScrollController();
     viewModel = context.watch<SectionsViewModel>();
     articleListViewModel = context.watch<ArticleListViewModel>();
     data = viewModel.sectionList;
@@ -63,7 +67,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: CustomTabView(
         initPosition: initPosition,
-        itemCount:lengthValue,
+        itemCount: lengthValue,
         tabBuilder: (context, index) => Tab(text: data?.data?[index].name),
         pageBuilder: (context, index) {
           if (index == 0) {
@@ -73,24 +77,27 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: homeArticleData?.data?.length,
+                controller: _controller,
                 itemBuilder: (context, index) {
                   Article? ar = homeArticleData?.data?[index];
                   if (topPicksList.length < 5) {
-                    if(ar != null){
+                    if (ar != null) {
                       topPicksList.add(ar);
                     }
                   }
                   if (index == 0) {
                     return InkWell(
-                      onTap: (){
-                        _sendDataToSecondScreen(context,ar?.description);
+                      onTap: () {
+                        _sendDataToSecondScreen(context, ar?.description);
                       },
-                      child: FullImageViewItem(article: ar,),
+                      child: FullImageViewItem(
+                        article: ar,
+                      ),
                     );
                   } else if (index == 3) {
-                    return BannerAds();
+                      return BannerAds();
                   } else if (index == 6) {
-                    return SubscribeUserTemplate();
+                    return MyStatefulWidget();
                   } else if (index == 10) {
                     return Container(
                       margin: const EdgeInsets.only(top: 10),
@@ -134,57 +141,22 @@ class _HomePageState extends State<HomePage> {
                     );
                   } else if (index == 16) {
                     return ListTile(
-                      title: FullWidthImageItem(
-                        articleImageUrl: ar?.imgUrl,
-                        articleTitle: ar?.title,
-                      ),
-                      onTap: (){
+                      title: FullWidthImageItem(ar),
+                      onTap: () {
                         _sendDataToSecondScreen(context, ar?.description);
                       },
                     );
                   } else if (index + 1 == homeArticleData?.data?.length) {
                     List<SubSection> sportsChipList =
                         _getSportChipsList(viewModel);
-                    print(sportsChipList);
-                    return Column(
-                      children: [
-                        // Container(
-                        //   height: 58,
-                        //   color: Colors.blueAccent,
-                        //   child: ListView.builder(
-                        //     scrollDirection: Axis.horizontal,
-                        //     itemCount: sportsChipList.length,
-                        //     itemBuilder: (context, index){
-                        //       SubSection su = sportsChipList[index];
-                        //       return ListTile(
-                        //         title: Container(
-                        //             margin: EdgeInsets.symmetric(horizontal: 20),
-                        //             child: Center(
-                        //               child:  Text(su.name ?? '',
-                        //                 style: TextStyle(
-                        //                     color: Colors.white,
-                        //                     fontSize: 24,
-                        //                     fontWeight: FontWeight.w600
-                        //                 ),),
-                        //             )
-                        //         ),
-                        //         onTap: (){
-                        //           su.isSelected = true;
-                        //           fetchSubSectionData(su.sectionId);
-                        //         },
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
-                      ],
-                    );
+                    return AllSportsViewItem(sportsChipList);
                   }
                   return ListTile(
-                    title:  HomePageListItem(
+                    title: HomePageListItem(
                       articleTitle: ar?.title,
                       articleImageUrl: ar?.imgUrl,
                     ),
-                    onTap: (){
+                    onTap: () {
                       _sendDataToSecondScreen(context, ar?.description);
                     },
                   );
@@ -192,15 +164,15 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           } else {
-
             return Container(
               child: Center(
-                child: Text("Coming soon",
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400
-                ),),
+                child: Text(
+                  "Coming soon",
+                  style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
             );
           }
@@ -236,39 +208,5 @@ class _HomePageState extends State<HomePage> {
   }
 
   void fetchSubSectionData(var sction_id) {}
-}
 
-class SingleSelectChip extends StatefulWidget {
-  final List<SubSection>? reportList;
-  final Function onSelectionChanged;
-
-  SingleSelectChip(
-      {required this.reportList, required this.onSelectionChanged});
-
-  @override
-  _SingleSelectChipState createState() => _SingleSelectChipState();
-}
-
-class _SingleSelectChipState extends State<SingleSelectChip> {
-  String selectedChoices = '';
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-        children: widget.reportList!
-            .map((item) => (Container(
-                  padding: const EdgeInsets.all(2.0),
-                  child: ChoiceChip(
-                    selectedColor: Colors.lightBlueAccent,
-                    label: Text(item.name ?? ""),
-                    selected: selectedChoices.contains(item.sectionId ?? ""),
-                    onSelected: (selected) {
-                      setState(() {
-                        selectedChoices = item.sectionId ?? "";
-                      });
-                    },
-                  ),
-                )))
-            .toList(),);
-  }
 }
