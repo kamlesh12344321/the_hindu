@@ -38,6 +38,7 @@ dependencies:
   http: ^0.13.4
   provider: ^6.0.2
   flutter_html: ^2.2.1
+  cached_network_image: ^3.2.0
   video_player:
 
 dev_dependencies:
@@ -95,12 +96,12 @@ flutter:
     - family: FiraSans
       fonts:
         - asset: assets/fonts/FiraSans-Regular.ttf
-        - asset: assets/fonts/FiraSans-Regular.ttf
-        - asset: assets/fonts/FiraSans-SemiBold.ttf
-        - asset: assets/fonts/TundraOffc.ttf
-        - asset: assets/fonts/TundraOffc-Bold.ttf
-        - asset: assets/fonts/TundraOffc-BoldItalic.ttf
-        - asset: assets/fonts/TundraOffc-Italic.ttf
+#        - asset: assets/fonts/FiraSans-Regular.ttf
+#        - asset: assets/fonts/FiraSans-SemiBold.ttf
+#        - asset: assets/fonts/TundraOffc.ttf
+#        - asset: assets/fonts/TundraOffc-Bold.ttf
+#        - asset: assets/fonts/TundraOffc-BoldItalic.ttf
+#        - asset: assets/fonts/TundraOffc-Italic.ttf
 
 
 

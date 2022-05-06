@@ -11,17 +11,14 @@ import 'package:the_hindu/lists/sport_star_item.dart';
 import 'package:the_hindu/lists/subscribe_user.dart';
 import 'package:the_hindu/lists/top_picks_item.dart';
 import 'package:the_hindu/networking/models/article_list.dart';
-import 'package:the_hindu/networking/models/generic_data.dart';
 import 'package:the_hindu/networking/models/section_list.dart';
 import 'package:the_hindu/networking/models/sport_stars.dart';
 import 'package:the_hindu/networking/view_models/Article_list_view_model.dart';
-import 'package:the_hindu/networking/view_models/generic_list_view_model.dart';
 import 'package:the_hindu/networking/view_models/sport_stars_view_model.dart';
 import 'package:the_hindu/widgets/custom_tab_view.dart';
 import '../lists/AllSportsView.dart';
 import '../networking/view_models/sections_list_view_model.dart';
 import '../utils/CustomColors.dart';
-import '../widgets/ads_animation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,7 +35,6 @@ class _HomePageState extends State<HomePage> {
   late HomeArticle? homeArticleData;
   List<Article> topPicksList = [];
   late SportStarsViewModel sportStarsViewModel;
-  late GenericViewModel genericViewModel;
   late SportStars? sportStarsList;
   late int _pageIndex = 0;
   late PageController _pageController;
@@ -68,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       child: CustomTabView(
         initPosition: initPosition,
         itemCount: lengthValue,
-        tabBuilder: (context, index) => Tab(text: data?.data?[index].name),
+        tabBuilder: (context, index) => Tab(text: data?.data?[index].name,),
         pageBuilder: (context, index) {
           if (index == 0) {
             return Container(
@@ -97,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                   } else if (index == 3) {
                       return BannerAds();
                   } else if (index == 6) {
-                    return MyStatefulWidget();
+                    return SubscribeUserTemplate();
                   } else if (index == 10) {
                     return Container(
                       margin: const EdgeInsets.only(top: 10),

@@ -97,12 +97,17 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
           child: TabBar(
             isScrollable: true,
             controller: controller,
-            labelColor: Theme.of(context).primaryColor,
-            unselectedLabelColor: Theme.of(context).hintColor,
+            labelColor: Colors.black,
+            labelStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              fontFamily: "FiraSans"
+            ),
+            unselectedLabelColor: Colors.grey,
             indicator: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.transparent,
                   width: 2,
                 ),
               ),

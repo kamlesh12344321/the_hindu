@@ -60,7 +60,7 @@ class SubSection {
 
   String? sectionId;
   String? name;
-  bool? isSelected;
+  bool isSelected = false;
 
   factory SubSection.fromJson(Map<String, dynamic> json) => SubSection(
     sectionId: json["section_id"] == null ? null : json["section_id"],

@@ -17,7 +17,6 @@ class SportStarsViewModel extends ChangeNotifier{
   }
   setLoading(bool loading) async {
     _isLoading = loading;
-    notifyListeners();
   }
 
   setSportStarsList(SportStars? sportStars){
@@ -29,6 +28,7 @@ class SportStarsViewModel extends ChangeNotifier{
      var response = await SectionServices.getSportStars();
      if(response is Success){
        setSportStarsList(response.response as SportStars?);
+       notifyListeners();
      }
    }
 }

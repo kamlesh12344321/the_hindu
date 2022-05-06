@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:the_hindu/lists/AllSportsView.dart';
 import 'package:the_hindu/networking/models/generic_data.dart';
 import 'package:the_hindu/networking/repo/api_status.dart';
 import 'package:the_hindu/networking/repo/section_service.dart';
@@ -21,7 +22,6 @@ class GenericViewModel extends ChangeNotifier{
 
   setLoading(bool loading) async {
     _isLoading = loading;
-    notifyListeners();
   }
 
   setGenericListModel( GenericList? genericList){
@@ -30,9 +30,10 @@ class GenericViewModel extends ChangeNotifier{
 
   getGenericList() async {
     setLoading(true);
-    var response = await SectionServices.getGenericArticles(id);
+    var response = await SectionServices.getGenericArticles(id ?? "13");
     if(response is Success){
       setGenericListModel(response.response as GenericList?);
+      notifyListeners();
     }
   }
 }

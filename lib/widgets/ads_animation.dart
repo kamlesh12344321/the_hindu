@@ -11,7 +11,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 10),
     vsync: this,
   );
   late final Animation<double> _animation = CurvedAnimation(

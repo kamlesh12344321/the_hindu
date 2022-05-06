@@ -33,7 +33,7 @@ class GenericItem {
     this.articleId,
     this.property,
     this.premium,
-    this.imgUrl,
+    required this.imgUrl,
     this.location,
     this.title,
     this.section,
@@ -45,7 +45,7 @@ class GenericItem {
   String? articleId;
   Property? property;
   String? premium;
-  String? imgUrl;
+  String imgUrl;
   Location? location;
   String? title;
   GenericSection? section;
@@ -57,7 +57,7 @@ class GenericItem {
     articleId: json["article_id"] == null ? null : json["article_id"],
     property: json["property"] == null ? null : propertyValues.map[json["property"]],
     premium: json["premium"] == null ? null : json["premium"],
-    imgUrl: json["img_url"] == null ? null : json["img_url"],
+    imgUrl: json["img_url"],
     location: json["location"] == null ? null : locationValues.map[json["location"]],
     title: json["title"] == null ? null : json["title"],
     section: json["section"] == null ? null : sectionValues.map[json["section"]],

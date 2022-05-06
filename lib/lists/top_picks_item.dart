@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:the_hindu/networking/models/article_list.dart';
 import 'package:the_hindu/utils/CustomColors.dart';
@@ -24,6 +25,8 @@ class _TopPicksViewState extends State<TopPicksView> {
           scrollDirection: Axis.horizontal,
           itemCount: widget.data?.length,
           itemBuilder: (context, index) {
+            Article? article = widget.data![index];
+              String imageUrl = article.imgUrl;
             return Container(
               margin: const EdgeInsets.only(top: 15, bottom: 10, left: 16, right: 10),
               width: 149,
@@ -37,16 +40,23 @@ class _TopPicksViewState extends State<TopPicksView> {
                         _sendDataToSecondScreen(context, widget.data?[index].description);
                       },
                       child: Container(
-                        width: 149,
-                        height: 112,
-                        margin: const EdgeInsets.only(right: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    widget.data?[index].imgUrl ?? PLACE_HOLDER_SMALL),),),
+                        width: 139.0,
+                        height: 112.0,
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 149.0,
+                            height: 112.0,
+                            margin: EdgeInsets.only(right: 10),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(20.0),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Image.asset("assets/images/place_holder.png"),
+                        ),
                       ),
                     )
                   ),

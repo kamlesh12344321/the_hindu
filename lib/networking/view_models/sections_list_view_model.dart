@@ -17,7 +17,6 @@ class SectionsViewModel extends ChangeNotifier{
 
   setLoading(bool loading) async {
     _isLoading = loading;
-    notifyListeners();
   }
 
   setSectionListModel( Sections sectionList){
@@ -29,6 +28,7 @@ class SectionsViewModel extends ChangeNotifier{
     var response = await SectionServices.getSections();
     if(response is Success){
       setSectionListModel(response.response as Sections);
+      notifyListeners();
     }
   }
 }

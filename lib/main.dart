@@ -33,7 +33,6 @@ class _TheHinduState extends State<TheHinduApp> {
     child:  MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
           fontFamily: "FiraSans",
         ),
         home: TheHinduBottomNav()

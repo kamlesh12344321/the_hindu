@@ -19,7 +19,6 @@ class ArticleListViewModel extends ChangeNotifier{
 
   setLoading(bool loading) async {
     _isLoading = loading;
-    notifyListeners();
   }
 
   setArticleList(HomeArticle? homeArticleList){
@@ -31,6 +30,7 @@ class ArticleListViewModel extends ChangeNotifier{
     var response = await SectionServices.getArticles();
     if(response is Success){
       setArticleList(response.response as HomeArticle?);
+      notifyListeners();
     }
   }
 }

@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:the_hindu/networking/utils/section_constants.dart';
 import 'package:the_hindu/widgets/big_text.dart';
 import 'package:the_hindu/widgets/small_icon_article.dart';
 import 'package:the_hindu/widgets/small_text.dart';
+
 
 class HomePageListItem extends StatefulWidget {
   final String? articleTitle;
@@ -28,18 +29,22 @@ class _HomePageListItemState extends State<HomePageListItem> {
         children: [
           Center(
             child: Container(
-              width: 149,
-              height: 112,
-              margin: const EdgeInsets.only(right: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                    widget.articleImageUrl ?? PLACE_HOLDER_SMALL,
+              width: 149.0,
+              height: 112.0,
+              child: CachedNetworkImage(
+                imageUrl: widget.articleImageUrl!,
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 149.0,
+                  height: 112.0,
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(20.0),
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.cover),
                   ),
                 ),
+                errorWidget: (context, url, error) => Image.asset("assets/images/place_holder.png"),
               ),
             ),
           ),

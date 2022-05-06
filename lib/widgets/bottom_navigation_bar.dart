@@ -18,11 +18,11 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
   int _pageIndex = 0;
   late PageController _pageController;
   List<Widget> tabPages = [
-    HomePage(),
-    BriefingPage(),
-    TrendingPage(),
-    PremiumPage(),
-    MyAccountPage()
+    const HomePage(),
+    const BriefingPage(),
+    const TrendingPage(),
+      PremiumPage(),
+    const MyAccountPage()
   ];
 
   @override
@@ -34,13 +34,17 @@ class _TheHinduBottomNavState extends State<TheHinduBottomNav> {
         currentIndex: _pageIndex,
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
         onTap: onTabTapped,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Breifing"),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: "Trending"),
           BottomNavigationBarItem(icon: Icon(Icons.wrong_location), label: "Premium"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "My Account")
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "More")
         ],
       ),
       body: PageView(

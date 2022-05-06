@@ -1,12 +1,18 @@
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_hindu/networking/models/generic_data.dart';
+import 'package:the_hindu/networking/utils/section_constants.dart';
 import 'package:the_hindu/networking/view_models/generic_list_view_model.dart';
+import 'package:the_hindu/utils/CustomColors.dart';
 
 import '../networking/models/section_list.dart';
 import '../widgets/big_text.dart';
 import '../widgets/small_icon_article.dart';
 import '../widgets/small_text.dart';
+import 'package:http/http.dart' as http;
 
 class AllSportsViewItem extends StatefulWidget {
   late List<SubSection> sportSectionData;
@@ -18,25 +24,25 @@ class AllSportsViewItem extends StatefulWidget {
 }
 
 class _AllSportsViewItemState extends State<AllSportsViewItem> {
-  late GenericViewModel genericViewModel;
-  late GenericList? genericList;
+  late List<GenericItem> genericListItems;
+  late GenericList genericList = GenericList();
+  late List<GenericItem> sportsList = [];
+  late List<GenericItem> sportsList1 = [];
+  var count = 0;
 
   @override
   Widget build(BuildContext context) {
     SubSection subSection = widget.sportSectionData[0];
-    genericViewModel = context.watch<GenericViewModel>();
-    genericViewModel = GenericViewModel(id: subSection.sectionId);
-    genericList = genericViewModel.get_genericList;
-    print(genericList);
+    getGenericSportsList(subSection.sectionId.toString());
 
     return Container(
       margin: const EdgeInsets.only(
         top: 10,
         bottom: 10,
       ),
-      color: Colors.blueAccent,
+      color: CustomColors.sportUbSectionBackground,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
               height: 40,
@@ -50,13 +56,18 @@ class _AllSportsViewItemState extends State<AllSportsViewItem> {
                     String? title = widget.sportSectionData[index].name;
                     return InkWell(
                         onTap: () {
-                         setState(() {
-                           String? sec_id_tab =
-                               widget.sportSectionData[index].sectionId;
-                           genericViewModel = GenericViewModel(id: sec_id_tab);
-                           genericList = genericViewModel.get_genericList;
-                           print(genericList);
-                         });
+                          setState(() {
+                            for (SubSection sub in widget.sportSectionData) {
+                              sub.isSelected = false;
+                            }
+                            SubSection su = widget.sportSectionData[index];
+                            su.isSelected = true;
+
+                            String? sec_id_tab =
+                                widget.sportSectionData[index].sectionId;
+                            count--;
+                            getGenericSportsList(sec_id_tab!);
+                          });
                         },
                         child: Container(
                           margin: EdgeInsets.all(10),
@@ -64,105 +75,134 @@ class _AllSportsViewItemState extends State<AllSportsViewItem> {
                             child: Text(
                               title!,
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
+                                color: widget.sportSectionData[index].isSelected
+                                    ? Colors.white
+                                    : Colors.grey,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ));
                   })),
           Container(
             color: Colors.white,
-            margin: const EdgeInsets.only(top: 10),
-            child: _updataList(),
+            margin: const EdgeInsets.only(top: 20),
+            child: ListView.builder(
+              physics: const ClampingScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: sportsList1.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    height: 112,
+                    margin: const EdgeInsets.only(
+                        top: 12, bottom: 12, left: 16, right: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: 149.0,
+                            height: 112.0,
+                            margin: EdgeInsets.only(top: 10),
+                            child: CachedNetworkImage(
+                              imageUrl: sportsList1[index].imgUrl,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                width: 149.0,
+                                height: 112.0,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  image: DecorationImage(
+                                      image: imageProvider, fit: BoxFit.cover),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  Image.asset("assets/images/place_holder.png"),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BigText(16, Colors.black, 1,
+                                  sportsList1[index].title ?? ""),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SmallText(
+                                          "National  ", 12, Colors.black, 1.0),
+                                      SmallText(
+                                          "Time  ", 12, Colors.black, 1.0),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      SmallIconArticle(
+                                        'assets/images/share.png',
+                                        18.0,
+                                        17.0,
+                                      ),
+                                      const SizedBox(
+                                        width: 18,
+                                        height: 17,
+                                      ),
+                                      SmallIconArticle(
+                                          "assets/images/fav.png", 18.0, 17.0),
+                                    ],
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  _updataList(){
-    ListView.builder(
-      physics: const ClampingScrollPhysics(),
-      shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        GenericItem? ge = genericList?.data?[index];
-        print(ge);
-        return InkWell(
-          onTap: () {},
-          child: Container(
-            width: double.infinity,
-            height: 112,
-            margin: const EdgeInsets.only(
-              top: 12,
-              bottom: 12,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 149,
-                    height: 112,
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          ge?.imgUrl ?? "",
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BigText(16, Colors.black, 1, ge?.title ?? ""),
-                      Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SmallText(
-                                  "National  ", 12, Colors.black, 1.0),
-                              SmallText(
-                                  "Time  ", 12, Colors.black, 1.0),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              SmallIconArticle(
-                                'assets/images/share.png',
-                                18.0,
-                                17.0,
-                              ),
-                              const SizedBox(
-                                width: 18,
-                                height: 17,
-                              ),
-                              SmallIconArticle(
-                                  "assets/images/fav.png", 18.0, 17.0),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
+  Future<GenericList> getGenericSportsList(String id) async {
+    if (count == 0) {
+      count++;
+      String bodyData = json.encode({
+        'section_id': id,
+      });
+      String url =
+          "http://192.168.12.169/projects/Hindu/mvp/project-root/public/api/articles";
+      // var bodyData = new Map<String, dynamic>();
+      // bodyData["section_id"] = id;
+      var response = await http.post(Uri.parse(url), body: bodyData);
+      if (response.statusCode == 200) {
+        var res = json.decode(response.body);
+        genericList = GenericList.fromJson(res);
+        if (genericList.data!.isNotEmpty) {
+          var data = res["data"] as List;
+          setState(() {
+            sportsList = data
+                .map<GenericItem>((json) => GenericItem.fromJson(json))
+                .toList();
+            sportsList1 = sportsList.sublist(0, 8);
+          });
+        }
+      }
+    }
+    return genericList;
   }
 }
-
-
